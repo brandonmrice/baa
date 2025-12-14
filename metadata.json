@@ -1,0 +1,5 @@
+{
+  "name": "Base Audit Dashboard",
+  "description": "A fully functional audit dashboard simulation with real-time state management, dark mode terminal aesthetics, and wallet integration logic.",
+  "requestFramePermissions": []
+}

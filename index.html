@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Base Audit // 8-BIT HUD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              pixel: ['"Press Start 2P"', 'cursive'],
+              terminal: ['"VT323"', 'monospace'],
+            },
+            colors: {
+              retro: {
+                bg: '#050510',
+                panel: '#0f0f1f',
+                cyan: '#00f3ff',
+                purple: '#bc13fe',
+                pink: '#ff0099',
+                green: '#0aff0a',
+                yellow: '#fff200',
+                red: '#ff003c',
+                dim: '#2a2a40',
+                dark: '#000000',
+              }
+            },
+            backgroundImage: {
+              'grid-pattern': "linear-gradient(rgba(188, 19, 254, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(188, 19, 254, 0.1) 1px, transparent 1px)",
+              'scan-lines': "linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06))",
+            },
+            boxShadow: {
+              'pixel': '4px 4px 0px 0px rgba(0,0,0,1)',
+              'pixel-cyan': '4px 4px 0px 0px #00f3ff',
+              'pixel-purple': '4px 4px 0px 0px #bc13fe',
+              'pixel-pink': '4px 4px 0px 0px #ff0099',
+              'pixel-green': '4px 4px 0px 0px #0aff0a',
+              'pixel-yellow': '4px 4px 0px 0px #fff200',
+              'pixel-red': '4px 4px 0px 0px #ff003c',
+              'neon-cyan': '0 0 10px #00f3ff, 0 0 20px #00f3ff',
+              'neon-purple': '0 0 10px #bc13fe, 0 0 20px #bc13fe',
+            },
+            animation: {
+              'pulse-fast': 'pulse 0.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'glitch': 'glitch 1s linear infinite',
+              'scanline': 'scanline 8s linear infinite',
+              'float': 'float 3s ease-in-out infinite',
+            },
+            keyframes: {
+              glitch: {
+                '2%, 64%': { transform: 'translate(2px,0) skew(0deg)' },
+                '4%, 60%': { transform: 'translate(-2px,0) skew(0deg)' },
+                '62%': { transform: 'translate(0,0) skew(5deg)' },
+              },
+              scanline: {
+                '0%': { transform: 'translateY(-100%)' },
+                '100%': { transform: 'translateY(100%)' }
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-5px)' },
+              }
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      body {
+        background-color: #050510;
+        color: #e0e0e0;
+        image-rendering: pixelated;
+        overflow-x: hidden;
+      }
+      
+      /* CRT Scanline Overlay */
+      .scanlines::before {
+        content: " ";
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+        z-index: 100;
+        background-size: 100% 2px, 3px 100%;
+        pointer-events: none;
+        opacity: 0.6;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 16px;
+        height: 16px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #000;
+        border-left: 4px solid #2a2a40;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #bc13fe; 
+        border: 4px solid #000;
+        box-shadow: inset -2px -2px 0px rgba(0,0,0,0.5);
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #00f3ff; 
+      }
+      
+      /* Selection */
+      ::selection {
+        background: #ff0099;
+        color: white;
+      }
+
+      .text-glow {
+        text-shadow: 2px 2px 0px #000;
+      }
+      
+      .box-pixel {
+        box-shadow: -4px 0 0 0 #000, 4px 0 0 0 #000, 0 -4px 0 0 #000, 0 4px 0 0 #000;
+        margin: 4px;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react-router-dom": "https://esm.sh/react-router-dom@6.28.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "ethers": "https://esm.sh/ethers@6.11.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
