@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useReducer, ReactNode } from 'react';
 import type { AppState, AuditLog, WalletState } from '../types';
 
-// Initial state
 const initialState: AppState = {
   audits: [],
   stats: {
@@ -19,7 +18,6 @@ const initialState: AppState = {
   isWalletModalOpen: false,
 };
 
-// Action types
 type Action =
   | { type: 'ADD_AUDIT'; payload: AuditLog }
   | { type: 'UPDATE_STATS'; payload: Partial<AppState['stats']> }
@@ -32,7 +30,6 @@ type Action =
   | { type: 'OPEN_WALLET_MODAL' }
   | { type: 'CLOSE_WALLET_MODAL' };
 
-// Reducer
 function appReducer(state: AppState, action: Action): AppState {
   switch (action.type) {
     case 'ADD_AUDIT':
@@ -80,7 +77,6 @@ function appReducer(state: AppState, action: Action): AppState {
   }
 }
 
-// Context
 interface AppContextValue {
   state: AppState;
   dispatch: React.Dispatch<Action>;
@@ -88,7 +84,6 @@ interface AppContextValue {
 
 const AppContext = createContext<AppContextValue | undefined>(undefined);
 
-// Provider
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
@@ -99,7 +94,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   );
 };
 
-// Hook
 export const useAppContext = () => {
   const context = useContext(AppContext);
   if (!context) {
@@ -107,3 +101,27 @@ export const useAppContext = () => {
   }
   return context;
 };
+```
+
+**Your folder structure should now be:**
+```
+base_-audit_-agent/
+├── components/
+│   ├── Sidebar.tsx
+│   ├── InitiateAuditModal.tsx
+│   ├── UpgradeModal.tsx
+│   └── WalletModal.tsx
+├── pages/
+│   ├── Dashboard.tsx
+│   ├── NewAudit.tsx
+│   ├── Report.tsx
+│   ├── Monitoring.tsx
+│   └── Settings.tsx
+├── store/               ← CREATE THIS FOLDER
+│   └── AppContext.tsx   ← CREATE THIS FILE
+├── App.tsx
+├── index.tsx
+├── types.ts
+├── index.html
+├── package.json
+└── vite.config.ts
